@@ -14,11 +14,7 @@ npm install
 
 Create a `.env` file in the root directory:
 
-```env
-MONGODB_URI=mongodb+srv://kliengumapac:Confirmpass123@io.g9rwrfe.mongodb.net/dotgame?retryWrites=true&w=majority
-PORT=3000
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
-```
+
 
 **⚠️ Security Note:** The `.env` file is already in `.gitignore` to prevent leaking credentials. Never commit your `.env` file to version control!
 
