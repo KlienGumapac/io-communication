@@ -734,7 +734,14 @@ function setupMultiplayer() {
     }
     
     // Connect to Socket.io server
-    gameState.socket = io();
+    // In production, connect to Railway Socket.io server
+    // In development, connect to localhost
+    const socketUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:3000'  // Development - local server
+        : 'https://io-communication-production.up.railway.app'; // Production - Railway server (UPDATE THIS URL!)
+    
+    console.log('Connecting to Socket.io server:', socketUrl);
+    gameState.socket = io(socketUrl);
     
     gameState.socket.on('connect', () => {
         console.log('Connected to game server');

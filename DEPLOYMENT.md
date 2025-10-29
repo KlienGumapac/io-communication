@@ -83,7 +83,9 @@ Deploy everything to a platform that supports WebSockets:
 Make sure these are set in your hosting platform:
 
 ```
-
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database
+JWT_SECRET=your-super-secret-jwt-key
+PORT=3000 (usually auto-set by platform)
 ```
 
 ## Testing Locally
