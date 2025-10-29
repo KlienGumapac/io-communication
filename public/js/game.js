@@ -64,6 +64,7 @@ function initGame() {
     
     // Set up mobile/touch controls
     setupMobileControls();
+    setupJoystick();
     
     // Set up zoom controls
     setupZoom();
@@ -283,6 +284,120 @@ function setupMobileControls() {
     setupButton(dpadRight, 'right');
 }
 
+// Virtual joystick for mobile
+function setupJoystick() {
+    const base = document.getElementById('joystickBase');
+    const thumb = document.getElementById('joystickThumb');
+    const joystick = document.getElementById('joystick');
+    
+    if (!base || !thumb || !joystick) return;
+    
+    // Initialize joystick state
+    gameState.joystick = {
+        active: false,
+        dx: 0,
+        dy: 0
+    };
+    
+    const baseSize = 140;
+    const radius = baseSize / 2;
+    const thumbRadius = 35; // half of 70px
+    
+    let center = { x: 0, y: 0 };
+    
+    const getCenter = () => {
+        const rect = base.getBoundingClientRect();
+        center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    };
+    
+    // Recompute on resize/orientation
+    window.addEventListener('resize', getCenter);
+    getCenter();
+    
+    const setThumb = (clientX, clientY) => {
+        const dx = clientX - center.x;
+        const dy = clientY - center.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = radius - thumbRadius;
+        
+        let nx = 0;
+        let ny = 0;
+        let px = 0;
+        let py = 0;
+        
+        if (dist > 0) {
+            const clamped = Math.min(dist, maxDist);
+            nx = dx / dist; // normalized x
+            ny = dy / dist; // normalized y
+            px = nx * clamped;
+            py = ny * clamped;
+        }
+        
+        // Position thumb inside the base
+        thumb.style.transform = `translate(${px}px, ${py}px)`;
+        
+        // Store normalized direction for movement (limit magnitude to 1)
+        const intensity = Math.min(dist / maxDist, 1);
+        gameState.joystick.dx = nx * intensity;
+        gameState.joystick.dy = ny * intensity;
+    };
+    
+    const start = (clientX, clientY) => {
+        gameState.joystick.active = true;
+        setThumb(clientX, clientY);
+    };
+    
+    const move = (clientX, clientY) => {
+        if (!gameState.joystick.active) return;
+        setThumb(clientX, clientY);
+    };
+    
+    const end = () => {
+        gameState.joystick.active = false;
+        gameState.joystick.dx = 0;
+        gameState.joystick.dy = 0;
+        thumb.style.transform = 'translate(0px, 0px)';
+    };
+    
+    // Mouse (for desktop testing)
+    joystick.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        getCenter();
+        start(e.clientX, e.clientY);
+    });
+    document.addEventListener('mousemove', (e) => {
+        if (!gameState.joystick?.active) return;
+        e.preventDefault();
+        move(e.clientX, e.clientY);
+    });
+    document.addEventListener('mouseup', () => end());
+    
+    // Touch
+    joystick.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        getCenter();
+        const t = e.changedTouches[0];
+        start(t.clientX, t.clientY);
+    }, { passive: false });
+    
+    joystick.addEventListener('touchmove', (e) => {
+        if (!gameState.joystick?.active) return;
+        e.preventDefault();
+        const t = e.changedTouches[0];
+        move(t.clientX, t.clientY);
+    }, { passive: false });
+    
+    joystick.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        end();
+    }, { passive: false });
+    
+    joystick.addEventListener('touchcancel', (e) => {
+        e.preventDefault();
+        end();
+    }, { passive: false });
+}
+
 // Set up zoom controls
 function setupZoom() {
     const canvas = gameState.canvas;
@@ -355,24 +470,30 @@ function resetZoom() {
     updateCamera();
 }
 
-// Update player position based on keys
+// Update player position based on keys or joystick
 function updatePlayer() {
     let dx = 0;
     let dy = 0;
     
-    if (gameState.keys.up) dy -= gameState.player.speed;
-    if (gameState.keys.down) dy += gameState.player.speed;
-    if (gameState.keys.left) dx -= gameState.player.speed;
-    if (gameState.keys.right) dx += gameState.player.speed;
+    // If joystick active, use analog vector; otherwise use keys
+    if (gameState.joystick && gameState.joystick.active) {
+        dx = gameState.joystick.dx * gameState.player.speed;
+        dy = gameState.joystick.dy * gameState.player.speed;
+    } else {
+        if (gameState.keys.up) dy -= gameState.player.speed;
+        if (gameState.keys.down) dy += gameState.player.speed;
+        if (gameState.keys.left) dx -= gameState.player.speed;
+        if (gameState.keys.right) dx += gameState.player.speed;
+        
+        // Normalize diagonal movement for keys
+        if (dx !== 0 && dy !== 0) {
+            dx *= 0.707; // 1/√2 for smooth diagonal movement
+            dy *= 0.707;
+        }
+    }
     
     // Check if player is moving
     gameState.player.isMoving = dx !== 0 || dy !== 0;
-    
-    // Normalize diagonal movement
-    if (dx !== 0 && dy !== 0) {
-        dx *= 0.707; // 1/√2 for smooth diagonal movement
-        dy *= 0.707;
-    }
     
     // Update player position (free movement, no boundaries for now)
     gameState.player.x += dx;

@@ -19,7 +19,7 @@
             
             <div class="instructions" id="instructions">
                 <p class="desktop-only">Use <kbd>WASD</kbd> or <kbd>Arrow Keys</kbd> to move</p>
-                <p class="mobile-only">Use the D-pad to move</p>
+                <p class="mobile-only">Use the joystick to move</p>
                 <p style="margin-top: 4px; font-size: 12px;">Scroll to zoom in/out • <kbd>+/-</kbd> to zoom • <kbd>0</kbd> to reset</p>
             </div>
             
@@ -47,17 +47,10 @@
             
             <!-- Mobile Controls (Touch) -->
             <div class="mobile-controls" id="mobileControls">
-                <!-- D-pad -->
-                <div class="dpad-container">
-                    <div class="dpad">
-                        <button class="dpad-btn dpad-up" id="dpadUp" aria-label="Move Up">↑</button>
-                        <div class="dpad-middle">
-                            <button class="dpad-btn dpad-left" id="dpadLeft" aria-label="Move Left">←</button>
-                            <button class="dpad-btn dpad-center" id="dpadCenter"></button>
-                            <button class="dpad-btn dpad-right" id="dpadRight" aria-label="Move Right">→</button>
-                        </div>
-                        <button class="dpad-btn dpad-down" id="dpadDown" aria-label="Move Down">↓</button>
-                    </div>
+                <!-- Joystick -->
+                <div class="joystick" id="joystick">
+                    <div class="joystick-base" id="joystickBase"></div>
+                    <div class="joystick-thumb" id="joystickThumb"></div>
                 </div>
             </div>
         </div>
