@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Dot - Dot Game</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="background">
+        <div class="floating-dots">
+            <div class="dot dot-1"></div>
+            <div class="dot dot-2"></div>
+            <div class="dot dot-3"></div>
+            <div class="dot dot-4"></div>
+            <div class="dot dot-5"></div>
+            <div class="dot dot-6"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-box">
+            <div class="header">
+                <h1 class="logo-text">Customize Your Dot</h1>
+                <p class="subtitle">Welcome, <span id="usernameDisplay">Player</span>!</p>
+            </div>
+
+            <div class="customization-section">
+                <!-- Preview -->
+                <div class="preview-container">
+                    <div class="preview-label">Preview</div>
+                    <div class="preview-area">
+                        <div class="preview-dot" id="previewDot">
+                            <div class="preview-avatar" id="previewAvatar"></div>
+                            <div class="preview-name" id="previewName">Your Name</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Selection -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="icon">🎨</span>
+                        Choose Your Color
+                    </h3>
+                    <div class="color-grid" id="colorGrid">
+                        <div class="color-option" data-color="#6366f1" style="background: #6366f1;"></div>
+                        <div class="color-option" data-color="#ec4899" style="background: #ec4899;"></div>
+                        <div class="color-option" data-color="#10b981" style="background: #10b981;"></div>
+                        <div class="color-option" data-color="#f59e0b" style="background: #f59e0b;"></div>
+                        <div class="color-option" data-color="#3b82f6" style="background: #3b82f6;"></div>
+                        <div class="color-option" data-color="#ef4444" style="background: #ef4444;"></div>
+                        <div class="color-option" data-color="#8b5cf6" style="background: #8b5cf6;"></div>
+                        <div class="color-option" data-color="#06b6d4" style="background: #06b6d4;"></div>
+                        <div class="color-option" data-color="#84cc16" style="background: #84cc16;"></div>
+                        <div class="color-option" data-color="#f97316" style="background: #f97316;"></div>
+                        <div class="color-option" data-color="#64748b" style="background: #64748b;"></div>
+                        <div class="color-option" data-color="#000000" style="background: #000000;"></div>
+                    </div>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="section">
+                    <h3 class="section-title">
+                        <span class="icon">🖼️</span>
+                        Custom Avatar (Optional)
+                    </h3>
+                    <div class="upload-container">
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="avatarInput" accept="image/*" hidden>
+                            <div class="upload-content" id="uploadContent">
+                                <div class="upload-icon">📁</div>
+                                <p class="upload-text">Click to upload or drag and drop</p>
+                                <p class="upload-hint">PNG, JPG up to 2MB</p>
+                            </div>
+                            <div class="upload-preview" id="uploadPreview" style="display: none;">
+                                <img id="previewImage" src="" alt="Preview">
+                                <button class="remove-btn" id="removeImageBtn">✕</button>
+                            </div>
+                        </div>
+                        <button class="clear-avatar-btn" id="clearAvatarBtn" style="display: none;">
+                            Use Color Instead
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button class="action-btn secondary" id="cancelBtn">Cancel</button>
+                    <button class="action-btn primary" id="saveBtn">
+                        <span>Save & Play</span>
+                        <div class="btn-dot"></div>
+                    </button>
+                </div>
+
+                <div class="message" id="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
+

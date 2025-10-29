@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Dot Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background">
+        <div class="floating-dots">
+            <div class="dot dot-1"></div>
+            <div class="dot dot-2"></div>
+            <div class="dot dot-3"></div>
+            <div class="dot dot-4"></div>
+            <div class="dot dot-5"></div>
+            <div class="dot dot-6"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="login-box" id="loginBox">
+            <div class="logo-container">
+                <div class="logo-circle"></div>
+                <h1 class="logo-text">Dot Game</h1>
+                <p class="subtitle">Jump in and play!</p>
+            </div>
+
+            <div class="form-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" id="loginTab">Login</button>
+                    <button class="tab-btn" id="registerTab">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="form active">
+                    <div class="input-group">
+                        <input type="text" id="loginUsername" placeholder=" " required>
+                        <label for="loginUsername">Username</label>
+                        <span class="input-line"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="password" id="loginPassword" placeholder=" " required>
+                        <label for="loginPassword">Password</label>
+                        <span class="input-line"></span>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Play Now</span>
+                        <div class="btn-dot"></div>
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="form">
+                    <div class="input-group">
+                        <input type="text" id="registerUsername" placeholder=" " required minlength="3" maxlength="20">
+                        <label for="registerUsername">Username</label>
+                        <span class="input-line"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="password" id="registerPassword" placeholder=" " required minlength="6">
+                        <label for="registerPassword">Password</label>
+                        <span class="input-line"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="registerConfirmPassword" placeholder=" " required>
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <span class="input-line"></span>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Create Account</span>
+                        <div class="btn-dot"></div>
+                    </button>
+                </form>
+
+                <div class="message" id="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
+

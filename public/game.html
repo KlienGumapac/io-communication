@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot Game - Play</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- UI Overlay -->
+        <div class="ui-overlay">
+            <div class="top-bar">
+                <div class="player-info">
+                    <div class="player-name-badge" id="playerNameBadge">Player</div>
+                    <button class="settings-btn" id="settingsBtn" title="Settings">⚙️</button>
+                </div>
+            </div>
+            
+            <div class="instructions" id="instructions">
+                <p>Use <kbd>WASD</kbd> or <kbd>Arrow Keys</kbd> to move</p>
+                <p style="margin-top: 4px; font-size: 12px;">Scroll to zoom in/out • <kbd>+/-</kbd> to zoom • <kbd>0</kbd> to reset</p>
+            </div>
+            
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input-container">
+                    <input type="text" 
+                           id="chatInput" 
+                           class="chat-input" 
+                           placeholder="Type to chat (Press Enter)" 
+                           maxlength="100">
+                    <button class="chat-send-btn" id="chatSendBtn" title="Send (Enter)">💬</button>
+                </div>
+            </div>
+            
+            <!-- Minimap -->
+            <div class="minimap-container" id="minimapContainer">
+                <div class="minimap-header">
+                    <span>Map</span>
+                    <button class="minimap-toggle" id="minimapToggle" title="Toggle Minimap">−</button>
+                </div>
+                <canvas id="minimapCanvas" class="minimap-canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Settings Modal -->
+        <div class="modal" id="settingsModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button class="modal-close" id="closeSettingsBtn">✕</button>
+                </div>
+                <div class="modal-body">
+                    <button class="menu-btn" id="customizeBtn">Customize Avatar</button>
+                    <button class="menu-btn" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
+
