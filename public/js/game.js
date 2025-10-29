@@ -62,6 +62,9 @@ function initGame() {
     // Set up keyboard controls
     setupControls();
     
+    // Set up mobile/touch controls
+    setupMobileControls();
+    
     // Set up zoom controls
     setupZoom();
     
@@ -228,6 +231,56 @@ function setupControls() {
             gameState.keys.right = false;
         }
     });
+}
+
+// Set up mobile/touch controls
+function setupMobileControls() {
+    const dpadUp = document.getElementById('dpadUp');
+    const dpadDown = document.getElementById('dpadDown');
+    const dpadLeft = document.getElementById('dpadLeft');
+    const dpadRight = document.getElementById('dpadRight');
+    
+    if (!dpadUp || !dpadDown || !dpadLeft || !dpadRight) {
+        return; // Controls not available
+    }
+    
+    // Prevent default touch behaviors
+    const preventDefaults = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+    
+    // Handle button press
+    const handlePress = (direction, value) => {
+        return (e) => {
+            preventDefaults(e);
+            gameState.keys[direction] = value;
+        };
+    };
+    
+    // Touch events for buttons
+    const setupButton = (button, direction) => {
+        if (!button) return;
+        
+        // Mouse events (for testing on desktop)
+        button.addEventListener('mousedown', handlePress(direction, true));
+        button.addEventListener('mouseup', handlePress(direction, false));
+        button.addEventListener('mouseleave', handlePress(direction, false));
+        
+        // Touch events
+        button.addEventListener('touchstart', handlePress(direction, true), { passive: false });
+        button.addEventListener('touchend', handlePress(direction, false), { passive: false });
+        button.addEventListener('touchcancel', handlePress(direction, false), { passive: false });
+        
+        // Prevent context menu on long press
+        button.addEventListener('contextmenu', preventDefaults);
+    };
+    
+    // Set up each button
+    setupButton(dpadUp, 'up');
+    setupButton(dpadDown, 'down');
+    setupButton(dpadLeft, 'left');
+    setupButton(dpadRight, 'right');
 }
 
 // Set up zoom controls
